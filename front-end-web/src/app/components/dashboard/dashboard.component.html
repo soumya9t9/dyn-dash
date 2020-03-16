@@ -1,1 +1,28 @@
+<!-- DROP DOWN -->
+<div class="dropdown-wrapper">
+    <mat-form-field appearance="none">
+        <mat-select [(ngModel)]="category.selectedValue" (selectionChange)="dropdownSelectOnChange(field)">
+            <mat-option *ngFor="let opt of category.list" [value]="opt.value || opt" [disabled]="opt['disableOption']">
+                {{opt.label || opt}}</mat-option>
+        </mat-select>
+        <mat-error class="padding-bottom">
+
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="none">
+        <mat-select [(ngModel)]="bYear.selectedValue" (selectionChange)="dropdownSelectOnChange(field)">
+            <mat-option *ngFor="let opt of bYear.list" [value]="opt.value || opt" [disabled]="opt['disableOption']">
+                {{opt.label || opt}}</mat-option>
+        </mat-select>
+        <mat-error class="padding-bottom">
+        </mat-error>
+    </mat-form-field>
+</div>
+
+<!-- PURCHASE -->
+<app-bar-chart [data]="data" style="width: 400px;height: 400px;"></app-bar-chart>
+
+
+<!-- SALE -->
 <app-bar-chart [data]="data" style="width: 400px;height: 400px;"></app-bar-chart>

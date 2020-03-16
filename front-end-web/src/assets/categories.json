@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Keyboard",
+        "id": 11
+    },
+    {
+        "name": "Corona",
+        "id": 22
+    },
+    {
+        "name": "Tablet",
+        "id": 33
+    },
+    {
+        "name": "Mobile",
+        "id": 44
+    },
+    {
+        "name": "Speaker",
+        "id": 99
+    }
+]

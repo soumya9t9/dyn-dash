@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
-declare var $: any;
-
+import * as $ from 'jquery';
+// declare var $: any;
 
 @Component({
   selector: 'app-bar-chart',
@@ -65,7 +65,7 @@ export class BarChartComponent implements OnInit {
 
     g.append('g')
       .attr('class', 'axis axis--y')
-      .call(d3.axisLeft(y).ticks(10, 'Rs'))
+      .call(d3.axisLeft(y).ticks(10, "%"))
       .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('y', 6)
@@ -80,7 +80,8 @@ export class BarChartComponent implements OnInit {
       .attr('x', d => x(d.month))
       .attr('y', d => y(d.value))
       .attr('width', x.bandwidth())
-      .attr('height', d => contentHeight - y(d.value));
+      .attr('height', d => contentHeight - y(d.value))
+      .attr('fill', "#ff9666");
   }
 }
 
