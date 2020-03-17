@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService, Payload } from 'src/app/services/http.service';
-import { data, localAPI } from 'src/app/utils/global.constant';
+import { data, localAPI, serverAPI } from 'src/app/utils/global.constant';
 import { isArray } from 'util';
 
 @Component({
@@ -10,17 +10,21 @@ import { isArray } from 'util';
 })
 export class DashboardComponent implements OnInit {
 
-  data = data;
-  saleData = data;
-  purchaseData = data;
+  saleData;
+  purchaseData;
   bYear = {
     selectedValue: null,
-    list: ["2019-20", "2018-19", "2017-18", "2016-17"]
+    list: null
   }
   category = {
     selectedValue: null,
     list: null
   }
+  toggler = {
+    purchase: true,
+    sell: true,
+  }
+  toggleType = toggleType;
   constructor(
     private httpService: HttpService
   ) { }
@@ -33,8 +37,7 @@ export class DashboardComponent implements OnInit {
 
   getAllCategories() {
     let payload: Payload = {
-      url: localAPI.categories,
-      isLocal: true
+      url: serverAPI.categories,
     }
     this.httpService.doApiCall(payload).subscribe(res => {
       if (isArray(res)) {
@@ -46,35 +49,39 @@ export class DashboardComponent implements OnInit {
 
   getAllFinancialYears() {
     let payload: Payload = {
-      url: localAPI.financialYear,
-      isLocal: true
+      url: serverAPI.financialYear,
     }
     this.httpService.doApiCall(payload).subscribe(res => {
       if (isArray(res)) {
         this.bYear.list = res;
-        this.bYear.selectedValue = res[0].id;
+        this.bYear.selectedValue = res[0].name;
       };
     });
   }
 
   getCategoryWiseData() {
     let payload: Payload = {
-      url: localAPI.categoryWiseData,
-      isLocal: true,
+      url: serverAPI.categoryWiseData,
       params: {
         categoryId: this.category.selectedValue,
         financialYear: this.bYear.selectedValue
       }
     }
     this.httpService.doApiCall(payload).subscribe(res => {
+      if (!isArray(res)) {
+        return null;
+      }
+
+      this.purchaseData = [];
+      this.saleData = [];
       res.forEach(element => {
         let purchaseItem = {
-          month:element.name,
-          value: element.buy
+          month: element.month,
+          value: element.purchase
         }
         let saleItem = {
-          month:element.name,
-          value: element.sale
+          month: element.month,
+          value: element.sell
         }
         this.purchaseData.push(purchaseItem);
         this.saleData.push(saleItem);
@@ -85,4 +92,13 @@ export class DashboardComponent implements OnInit {
   dropdownSelectOnChange(which: any) {
 
   }
+
+  toogleCharts(which:toggleType) {
+    this.toggler[which] = !this.toggler[which]
+  }
+}
+
+export enum toggleType {
+  PURCHASE = "purchase",
+  SELL = "sell"
 }

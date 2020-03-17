@@ -11,7 +11,7 @@ import { REQUEST_METHODS } from '../utils/global.constant';
 export class HttpService {
 
   BASE_URL_LOCAL = "./assets/";
-  BASE_URL_SERVER = "http://localhost:8080/api";
+  BASE_URL_SERVER = "http://192.168.43.123:8080/api";
 
   constructor(
     private http: HttpClient,
@@ -46,5 +46,5 @@ export interface Payload {
   headers?: HttpHeaders,
   params?: any;
   body?: any;
-  isLocal: boolean
+  isLocal?: boolean
 }

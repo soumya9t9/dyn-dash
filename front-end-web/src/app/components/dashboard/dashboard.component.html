@@ -1,49 +1,34 @@
 <!-- DROP DOWN -->
 <form class="dropdown-wrapper" (submit)="getCategoryWiseData()">
-    <!-- <mat-form-field appearance="none">
-        <mat-select [(ngModel)]="category.selectedValue" (selectionChange)="dropdownSelectOnChange(field)">
-            <mat-option *ngFor="let opt of category.list" [value]="opt.value || opt" [disabled]="opt['disableOption']">
-                {{opt.label || opt}}</mat-option>
-        </mat-select>
-        <mat-error class="padding-bottom">
 
-        </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="none">
-        <mat-select [(ngModel)]="bYear.selectedValue" (selectionChange)="dropdownSelectOnChange(field)">
-            <mat-option *ngFor="let opt of bYear.list" [value]="opt.value || opt" [disabled]="opt['disableOption']">
-                {{opt.label || opt}}</mat-option>
-        </mat-select>
-        <mat-error class="padding-bottom">
-        </mat-error>
-    </mat-form-field> -->
-    <select [(ngModel)]="category.selectedValue" name="category">
-        <option *ngFor="let opt of category.list" [value]="opt.id || opt" [disabled]="opt['disableOption']">
-            {{opt.name || opt}}</option>
-    </select>
-
-    <select [(ngModel)]="bYear.selectedValue" name="bYear">
-        <option *ngFor="let opt of bYear.list" [value]="opt.id || opt" [disabled]="opt['disableOption']">
-            {{opt.name || opt}}</option>
-    </select>
+    <div>CATEGORY:
+        <select [(ngModel)]="category.selectedValue" name="category">
+            <option *ngFor="let opt of category.list" [value]="opt.id || opt" [disabled]="opt['disableOption']">
+                {{opt.name || opt}}</option>
+        </select>
+    </div>
+    <div>FINANCIAL YEAR:
+        <select [(ngModel)]="bYear.selectedValue" name="bYear">
+            <option *ngFor="let opt of bYear.list" [value]="opt.name || opt" [disabled]="opt['disableOption']">
+                {{opt.name || opt}}</option>
+        </select>
+    </div>
 
     <button type="submit">Fetch Data</button>
 </form>
 
-<div class="graph-wrapper">
+<div class="graph-wrapper" *ngIf="purchaseData">
     <div class="buy">
         <!-- PURCHASE -->
-        <h6>PURCHASE</h6>
-        <app-bar-chart [data]="purchaseData" style="width: 400px;height: 400px;"></app-bar-chart>
-        <app-line-chart [data]="purchaseData"></app-line-chart>
-    
+        <h6 class="heading">PURCHASE <span><img src="/assets/swap.jpg" (click)="toogleCharts(toggleType.PURCHASE)"></span></h6>
+        <app-bar-chart [data]="purchaseData" style="width: 400px;height: 400px;" *ngIf="toggler.purchase"></app-bar-chart>
+        <app-line-chart [data]="purchaseData" *ngIf="toggler.purchase==false"></app-line-chart>
+
     </div>
-    <div class="sale">
+    <div class="sale" *ngIf="saleData">
         <!-- SALE -->
-        <h6>SALE</h6>
-        <app-bar-chart [data]="saleData" style="width: 400px;height: 400px;"></app-bar-chart>
-        <app-line-chart [data]="saleData"></app-line-chart>
+        <h6 class="heading">SELL<span><img src="/assets/swap.jpg" (click)="toogleCharts(toggleType.SELL)"></span></h6>
+        <app-bar-chart [data]="saleData" style="width: 400px;height: 400px;" *ngIf="toggler.sell"></app-bar-chart>
+        <app-line-chart [data]="saleData" *ngIf="toggler.sell===false"></app-line-chart>
     </div>
 </div>
-

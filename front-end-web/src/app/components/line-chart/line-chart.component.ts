@@ -44,29 +44,20 @@ export class LineChartComponent implements OnInit {
       .append("g")
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
-    //Read the data
-    // d3.csv("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/connectedscatter.csv",
-    //   // When reading the csv, I must format variables:
-    //   function (d: any):RequestInit {
-    //     return d
-    //     // return { month: d3.timeParse("%Y-%m-%d")(d.month), value: d.value }
-    //   },
-    //   // Now I can use this dataset:
-    //   function (data: any) {
-    //     // Add X axis --> it is a month format
+      // Add X axis --> it is a month format
         var x = d3
         // .scaleTime()
           .scaleBand()
           .domain(data.map(d => d.month))
           .padding(0.1)
-          // .domain(d3.extent(data, function (d) { return d.month; }))
           .range([0, width]);
         svg.append("g")
           .attr("transform", "translate(0," + height + ")")
           .call(d3.axisBottom(x));
         // Add Y axis
         var y = d3.scaleLinear()
-          .domain([parseInt(d3.min(data, (d:any) => d.value)), parseInt(d3.max(data, (d:any) => d.value))])
+          // .domain([parseInt(d3.min(data, (d:any) => d.value)), parseInt(d3.max(data, (d:any) => d.value))])
+          .domain([0,100])
           .range([height, 0]);
         svg.append("g")
           .call(d3.axisLeft(y));
@@ -91,7 +82,6 @@ export class LineChartComponent implements OnInit {
           .attr("cy", function (d:any) { return y(d.value) })
           .attr("r", 5)
           .attr("fill", "#69b3a2")
-      // })
   }
 
 }
