@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 import * as $ from 'jquery';
+import { Data } from 'src/app/utils/global.constant';
 // declare var $: any;
 
 @Component({
@@ -28,13 +29,13 @@ export class BarChartComponent implements OnInit {
   }
 
   private createChart(): void {
-    d3.select('svg').remove();
+    // d3.select('svg').remove();
 
     const element = this.chartContainer.nativeElement;
     const data = this.data;
 
-    let w = $(this.hostRef.nativeElement).parent().width() || element.offsetWidth;
-    let h = 350 ||element.offsetHeight;
+    let w = 650 || $(this.hostRef.nativeElement).parent().width() || element.offsetWidth;
+    let h = 350 || element.offsetHeight;
 
     const svg = d3.select(element).append('svg')
       .attr('width', w)
@@ -65,7 +66,7 @@ export class BarChartComponent implements OnInit {
 
     g.append('g')
       .attr('class', 'axis axis--y')
-      .call(d3.axisLeft(y).ticks(10, "%"))
+      .call(d3.axisLeft(y).ticks(11))
       .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('y', 6)
@@ -83,10 +84,4 @@ export class BarChartComponent implements OnInit {
       .attr('height', d => contentHeight - y(d.value))
       .attr('fill', "#ff9666");
   }
-}
-
-
-export interface Data {
-  month: string;
-  value: number;
 }

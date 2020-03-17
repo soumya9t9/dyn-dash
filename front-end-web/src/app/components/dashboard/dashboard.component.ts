@@ -11,6 +11,8 @@ import { isArray } from 'util';
 export class DashboardComponent implements OnInit {
 
   data = data;
+  saleData = data;
+  purchaseData = data;
   bYear = {
     selectedValue: null,
     list: ["2019-20", "2018-19", "2017-18", "2016-17"]
@@ -25,8 +27,8 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getAllCategories();
-    this.getAllCategories();
-    this.getCategoryWiseData();
+    this.getAllFinancialYears();
+    // this.getCategoryWiseData();
   }
 
   getAllCategories() {
@@ -37,6 +39,7 @@ export class DashboardComponent implements OnInit {
     this.httpService.doApiCall(payload).subscribe(res => {
       if (isArray(res)) {
         this.category.list = res;
+        this.category.selectedValue = res[0].id;
       };
     });;
   }
@@ -49,6 +52,7 @@ export class DashboardComponent implements OnInit {
     this.httpService.doApiCall(payload).subscribe(res => {
       if (isArray(res)) {
         this.bYear.list = res;
+        this.bYear.selectedValue = res[0].id;
       };
     });
   }
@@ -58,12 +62,23 @@ export class DashboardComponent implements OnInit {
       url: localAPI.categoryWiseData,
       isLocal: true,
       params: {
-        category: this.category.selectedValue,
+        categoryId: this.category.selectedValue,
         financialYear: this.bYear.selectedValue
       }
     }
     this.httpService.doApiCall(payload).subscribe(res => {
-      
+      res.forEach(element => {
+        let purchaseItem = {
+          month:element.name,
+          value: element.buy
+        }
+        let saleItem = {
+          month:element.name,
+          value: element.sale
+        }
+        this.purchaseData.push(purchaseItem);
+        this.saleData.push(saleItem);
+      });
     });
   }
 

@@ -1,6 +1,6 @@
 <!-- DROP DOWN -->
-<div class="dropdown-wrapper">
-    <mat-form-field appearance="none">
+<form class="dropdown-wrapper" (submit)="getCategoryWiseData()">
+    <!-- <mat-form-field appearance="none">
         <mat-select [(ngModel)]="category.selectedValue" (selectionChange)="dropdownSelectOnChange(field)">
             <mat-option *ngFor="let opt of category.list" [value]="opt.value || opt" [disabled]="opt['disableOption']">
                 {{opt.label || opt}}</mat-option>
@@ -17,12 +17,33 @@
         </mat-select>
         <mat-error class="padding-bottom">
         </mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
+    <select [(ngModel)]="category.selectedValue" name="category">
+        <option *ngFor="let opt of category.list" [value]="opt.id || opt" [disabled]="opt['disableOption']">
+            {{opt.name || opt}}</option>
+    </select>
+
+    <select [(ngModel)]="bYear.selectedValue" name="bYear">
+        <option *ngFor="let opt of bYear.list" [value]="opt.id || opt" [disabled]="opt['disableOption']">
+            {{opt.name || opt}}</option>
+    </select>
+
+    <button type="submit">Fetch Data</button>
+</form>
+
+<div class="graph-wrapper">
+    <div class="buy">
+        <!-- PURCHASE -->
+        <h6>PURCHASE</h6>
+        <app-bar-chart [data]="purchaseData" style="width: 400px;height: 400px;"></app-bar-chart>
+        <app-line-chart [data]="purchaseData"></app-line-chart>
+    
+    </div>
+    <div class="sale">
+        <!-- SALE -->
+        <h6>SALE</h6>
+        <app-bar-chart [data]="saleData" style="width: 400px;height: 400px;"></app-bar-chart>
+        <app-line-chart [data]="saleData"></app-line-chart>
+    </div>
 </div>
 
-<!-- PURCHASE -->
-<app-bar-chart [data]="data" style="width: 400px;height: 400px;"></app-bar-chart>
-
-
-<!-- SALE -->
-<app-bar-chart [data]="data" style="width: 400px;height: 400px;"></app-bar-chart>

@@ -54,13 +54,13 @@ export const data = [
 
 export const localAPI:apiModel = {
     categories:"categories.json",
-    financialYear:"financial-year.json",
+    financialYear:"financial-years.json",
     categoryWiseData:"",
 }
 export const serverAPI:apiModel = {
     categories:"/dashboard/categories",
     financialYear:"/dashboard/financialYears",
-    categoryWiseData:"/dashboard/categories",
+    categoryWiseData:"/dashboard/getChartData",
 }
 
 export interface apiModel{
@@ -68,3 +68,9 @@ export interface apiModel{
     financialYear:string,
     categoryWiseData:string,
 }
+
+
+export interface Data {
+    month: string;
+    value: number;
+  }

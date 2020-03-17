@@ -10,7 +10,7 @@ import { REQUEST_METHODS } from '../utils/global.constant';
 })
 export class HttpService {
 
-  BASE_URL_LOCAL = "src/app/assets/";
+  BASE_URL_LOCAL = "./assets/";
   BASE_URL_SERVER = "http://localhost:8080/api";
 
   constructor(
